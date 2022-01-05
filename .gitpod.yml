@@ -1,0 +1,14 @@
+tasks:
+  - init: |
+      npm init -y
+      npm i react react-dom
+      npm i webpack webpack-cli webpack-dev-server
+      npm i html-webpack-plugin
+      npm i @babel/core @babel/preset-env @babel/preset-react babel-loader
+      npm i -D eslint babel-eslint eslint-plugin-react eslint-plugin-react-hooks
+    command: |
+      npm start
+      npm build
+ports:
+  - port: 8080
+    onOpen: open-browser
