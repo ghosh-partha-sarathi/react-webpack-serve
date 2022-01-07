@@ -11,7 +11,20 @@ Add below scripts block to package.json file IF NOT ALREADY ADDED
   npm run build     (starts webpack build using webpack config file)         
 
 NOTE:
-This code runs perfectly fine in localhost but throws error message "Invalid Host Header" while running through gitpod.
-As per my understanding this issue arises when webpack dev server is run on a docker container.
-While using gitpod, this issue can be avoided by using express instead of webpack server.
-More details about this issue can be found at https://github.com/facebook/create-react-app/issues/2271
+For security purposes, webpack-dev-server is NOT accessible externally. 
+This is the main cause for error message "Invalid Host Header" while running through gitpod as dev server is run on a docker container.
+To fix this issue in gitpod, we can set 'allowedHosts' property in devServer under webpack config.
+We can whitelist services that we wish to be allowed to access the dev server using this option.
+e.g.
+    devServer: {
+      allowedHosts: 'all'
+    }
+    OR we can also provide allowed host names explicitly, like-
+    devServer = {
+      allowedHosts: ['abc.com', 'xyz.in']
+    }
+When set to 'all' this option bypasses host checking. 
+THIS IS NOT RECOMMENDED as apps that do not check the host are vulnerable to DNS rebinding attacks.
+However, 'allowedHosts' is not required when accessing application through browser in localhost. 
+
+Alternatively we can use other servers like express instead of webpack.
